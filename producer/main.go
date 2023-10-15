@@ -2,8 +2,14 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/ankitdmon/producer/initializers"
 	"github.com/gin-gonic/gin"
 )
+
+func init (){
+	initializers.LoadENV()
+}
 
 func main() {
 	fmt.Println("Hello world!!")
