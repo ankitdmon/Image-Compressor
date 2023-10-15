@@ -7,8 +7,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func init (){
+func init() {
 	initializers.LoadENV()
+	initializers.ConnectToDB()
 }
 
 func main() {
