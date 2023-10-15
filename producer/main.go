@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/ankitdmon/producer/initializers"
+	"github.com/ankitdmon/producer/routes"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,6 +16,8 @@ func init() {
 func main() {
 	fmt.Println("Hello world!!")
 	r := gin.Default()
+
+	routes.SetupProductRoutes(r)
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
