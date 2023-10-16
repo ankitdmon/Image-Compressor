@@ -7,5 +7,5 @@ import (
 
 func SetupProductRoutes(r *gin.Engine) {
     r.POST("/product", controllers.CreateProduct)
-    r.GET("/products", controllers.GetProducts)
+    r.GET("/product/:id", controllers.GetProducts)
 }

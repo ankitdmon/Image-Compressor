@@ -1,6 +1,7 @@
 package messaging
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -12,7 +13,7 @@ const (
 	queueName   = "processImageQueue"
 )
 
-func PublishToRabbitMQ(message string) error {
+func PublishToRabbitMQ(productId int) error {
 	connection, err := amqp.Dial(rabbitMQURL)
 	if err != nil {
 		return fmt.Errorf("failed to connect to RabbitMQ: %v", err)
@@ -30,16 +31,21 @@ func PublishToRabbitMQ(message string) error {
 		return fmt.Errorf("failed to declare a queue: %v", err)
 	}
 
+	body, err := json.Marshal(productId)
+	if err != nil {
+		return fmt.Errorf("failed to marshal JSON in producer: %v", err)
+	}
+
 	err = channel.Publish("", queue.Name, false, false, amqp.Publishing{
 		DeliveryMode: amqp.Persistent,
 		ContentType:  "application/json",
-		Body:         []byte(message),
+		Body:         body,
 	})
 	if err != nil {
 		return fmt.Errorf("failed to publish a message: %v", err)
 	}
 
-	log.Printf("Published a message: %s", message)
+	log.Printf("Published a message: %s", body)
 
 	return nil
 }

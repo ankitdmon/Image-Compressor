@@ -21,8 +21,8 @@ func main() {
 
 	routes.SetupProductRoutes(r)
 
-	message := "Hello consumer"
-	err := messaging.PublishToRabbitMQ(message)
+	productId := 1
+	err := messaging.PublishToRabbitMQ(productId)
 	if err != nil {
 		log.Printf("Error publishing to RabbitMQ: %v", err)
 	}
