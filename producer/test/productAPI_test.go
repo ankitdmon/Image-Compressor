@@ -42,9 +42,23 @@ func TestCreateProduct(t *testing.T) {
 	}
 }
 
-// func TestGetProducts(t *testing.T) {
+func TestGetProducts(t *testing.T) {
+	r := gin.New()
+	routes.SetupProductRoutes(r)
 
-// }
+	req, err := http.NewRequest("GET", "/products", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+
+	r.ServeHTTP(w, req)
+
+	if w.Code != http.StatusOK {
+		t.Errorf("Expected status code %d but got %d", http.StatusOK, w.Code)
+	}
+}
 
 func TestMain(m *testing.M) {
 	exitCode := m.Run()
