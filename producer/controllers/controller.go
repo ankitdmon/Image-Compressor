@@ -28,17 +28,17 @@ func CreateProduct(c *gin.Context) {
 		return
 	}
 
-	// Convert to JSON array
-	compressedImagesJSON, err := json.Marshal(product.CompressedImages)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Failed to process compressed product images",
-		})
-		return
-	}
+	// // Convert to JSON array
+	// compressedImagesJSON, err := json.Marshal(product.CompressedImages)
+	// if err != nil {
+	// 	c.JSON(http.StatusInternalServerError, gin.H{
+	// 		"error": "Failed to process compressed product images",
+	// 	})
+	// 	return
+	// }
 
 	product.ProductImages = []string{string(productImagesJSON)}
-	product.CompressedImages = []string{string(compressedImagesJSON)}
+	//product.CompressedImages = []string{string(compressedImagesJSON)}
 
 	db := initializers.DB
 
