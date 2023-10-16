@@ -37,3 +37,30 @@ func TestProductModel(t *testing.T) {
 		t.Errorf("Expected ProductImages to be 'test image', got '%s'", product.ProductImages)
 	}
 }
+
+func BenchmarkCreateProduct(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		_, err := CreateProduct(1, "test product", "test description", "test image", 10.0)
+		if err != nil {
+			b.Errorf("Error creating product: %s", err.Error())
+		}
+	}
+}
+
+func BenchmarkGetProductId(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		_, err := GetProductId()
+		if err != nil {
+			b.Errorf("Error getting product ID: %s", err.Error())
+		}
+	}
+}
+
+func BenchmarkGetProductImagesByProductID(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		_, err := GetProductImagesByProductID(7)
+		if err != nil {
+			b.Errorf("Error getting product images: %s", err.Error())
+		}
+	}
+}
