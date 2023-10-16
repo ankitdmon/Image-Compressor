@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/ankitdmon/producer/initializers"
+	"github.com/ankitdmon/producer/messaging"
 	"github.com/ankitdmon/producer/models"
 	"github.com/gin-gonic/gin"
 )
@@ -19,6 +20,22 @@ func CreateProduct(c *gin.Context) {
 	product, err := models.CreateProduct(createProduct.UserID, createProduct.ProductName, createProduct.ProductDescription, createProduct.ProductImages, createProduct.ProductPrice)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error creating product"})
+		return
+	}
+
+	productID, err := models.GetProductId()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error getting product id"})
+		return
+	}
+	if productID == 0 {
+		c.JSON(http.StatusInternalServerError, gin.H{"error":"Error getting product id"})
+		return
+	}
+
+	err = messaging.PublishToRabbitMQ(productID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error connecting to RabbitMQ"})
 		return
 	}
 
