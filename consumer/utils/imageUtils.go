@@ -5,6 +5,7 @@ import (
 	"image"
 	"image/jpeg"
 	"net/http"
+	"path/filepath"
 
 	"strings"
 
@@ -45,3 +46,24 @@ func ResizeAndCompressImage(img image.Image, quality int) ([]byte, error) {
 	return []byte(buffer.String()), nil
 }
 
+func SaveImageToLocal(filename string, data []byte, dir string) (string, error) {
+	err := os.MkdirAll(dir, os.ModePerm)
+	if err != nil {
+		return "", fmt.Errorf("failed to create directory: %v", err)
+	}
+
+	filePath := filepath.Join(dir, filename)
+	f, err := os.Create(filePath)
+	if err != nil {
+		return "", fmt.Errorf("failed to create image file: %v", err)
+	}
+	defer f.Close()
+
+	_, err = f.Write(data)
+	if err != nil {
+		return "", fmt.Errorf("failed to write data to image file: %v", err)
+	}
+
+	logrus.Infof("Image saved to file %s", filePath)
+	return filePath, nil
+}
