@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/ankitdmon/producer/initializers"
 	"github.com/ankitdmon/producer/models"
-	"github.com/ankitdmon/producer/utils"
+	//"github.com/ankitdmon/producer/utils"
 )
 
 func init() {
@@ -13,5 +13,5 @@ func init() {
 
 func main() {
 	initializers.DB.AutoMigrate(&models.User{}, &models.Product{})
-	utils.InsertInitialUserData(initializers.DB)
+	//utils.InsertInitialUserData(initializers.DB)
 }

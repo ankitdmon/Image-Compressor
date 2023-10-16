@@ -6,16 +6,12 @@ import (
 
 func TestProductModel(t *testing.T) {
 	product := Product{
-		UserID:             1,
-		ProductName:        "Sample Product",
-		ProductDescription: "This is a sample product description.",
-		ProductImages:      []string{"image1.jpg", "image2.jpg"},
-		ProductPrice:       19.99,
-		CompressedImages:   []string{"compressed1.jpg", "compressed2.jpg"},
-	}
-
-	if product.ProductID != 0 {
-		t.Errorf("Expected ProductID to be 0, but got %d", product.ProductID)
+		UserID:                  1,
+		ProductName:             "Sample Product",
+		ProductDescription:      "This is a sample product description.",
+		ProductImages:           "test image",
+		ProductPrice:            19.99,
+		CompressedProductImages: "compressed1.jpg,compressed2.jpg",
 	}
 
 	if product.ProductName != "Sample Product" {
@@ -37,11 +33,7 @@ func TestProductModel(t *testing.T) {
 		t.Errorf("Expected UpdatedAt to be zero, but got a non-zero timestamp")
 	}
 
-	if len(product.ProductImages) != 2 {
-		t.Errorf("Expected 2 images in ProductImages, but got %d", len(product.ProductImages))
-	}
-
-	if len(product.CompressedImages) != 2 {
-		t.Errorf("Expected 2 images in CompressedImages, but got %d", len(product.CompressedImages))
+	if product.ProductImages != "test image" {
+		t.Errorf("Expected ProductImages to be 'test image', got '%s'", product.ProductImages)
 	}
 }
