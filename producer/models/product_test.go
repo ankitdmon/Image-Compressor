@@ -2,12 +2,10 @@ package models
 
 import (
 	"testing"
-
-	"github.com/ankitdmon/producer/models"
 )
 
 func TestProductModel(t *testing.T) {
-	product := models.Product    {
+	product := Product{
 		UserID:             1,
 		ProductName:        "Sample Product",
 		ProductDescription: "This is a sample product description.",

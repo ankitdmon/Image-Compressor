@@ -2,12 +2,10 @@ package models
 
 import (
 	"testing"
-
-	"github.com/ankitdmon/producer/models"
 )
 
 func TestUserModelValidation(t *testing.T) {
-	user := models.User{
+	user := User{
 		Name:      "John Doe",
 		Mobile:    "123-456-7890",
 		Latitude:  37.7749,
