@@ -5,10 +5,12 @@ import (
 	"image"
 	"image/jpeg"
 	"net/http"
+	"os"
 	"path/filepath"
 
 	"strings"
 
+	"github.com/ankitdmon/producer/models"
 	"github.com/nfnt/resize"
 	"github.com/sirupsen/logrus"
 )
@@ -66,4 +68,38 @@ func SaveImageToLocal(filename string, data []byte, dir string) (string, error) 
 
 	logrus.Infof("Image saved to file %s", filePath)
 	return filePath, nil
+}
+
+func CompressAndUpdateImageInDB(productID int, quality int) error {
+	images, err := models.GetProductImagesByProductID(productID)
+	if err != nil {
+		return fmt.Errorf("failed to get product images from db: %v", err)
+	}
+
+	for i, imgURL := range images {
+
+		img, err := DownloadImage(imgURL)
+		if err != nil {
+			return err
+		}
+
+		compressedImage, err := ResizeAndCompressImage(img, quality)
+		if err != nil {
+			return err
+		}
+
+		filename := fmt.Sprintf("compressed_image_%d_%d.jpg", productID, i+1)
+		filepath, err := SaveImageToLocal(filename, compressedImage, "compressedImages")
+		if err != nil {
+			return fmt.Errorf("failed to save compressed image to file: %v", err)
+		}
+
+		err = models.UpdateProductImage(productID, filepath)
+		if err != nil {
+			return err
+		}
+
+	}
+
+	return nil
 }
