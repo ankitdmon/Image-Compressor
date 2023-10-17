@@ -7,7 +7,7 @@ If you haven't already, you need to install Go. You mentioned that you are using
 
 You can download and install Go from the official website: 
 
-```http
+```
 https://go.dev/dl/
 ```
 
