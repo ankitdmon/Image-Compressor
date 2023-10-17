@@ -29,7 +29,7 @@ func CreateProduct(c *gin.Context) {
 		return
 	}
 	if productID == 0 {
-		c.JSON(http.StatusInternalServerError, gin.H{"error":"Error getting product id"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error getting product id"})
 		return
 	}
 

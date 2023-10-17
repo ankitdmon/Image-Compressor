@@ -1,9 +1,9 @@
 package models
 
 import (
+	"fmt"
 	"strings"
 	"time"
-	"fmt"
 
 	"github.com/ankitdmon/producer/initializers"
 )
@@ -19,7 +19,6 @@ type Product struct {
 	CreatedAt               time.Time `json:"created_at"`
 	UpdatedAt               time.Time `json:"updated_at"`
 }
-
 
 func CreateProduct(userID int, productName string, productDescription string, productImages string, productPrice float64) (*Product, error) {
 	db := initializers.DB
